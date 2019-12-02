@@ -1,0 +1,14 @@
+body {
+    background-image: url("../assets/flat-geometric-shapes-background/3116556.jpg");
+}
+
+body, h1 {
+	margin: 0;
+}
+body {
+	font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
