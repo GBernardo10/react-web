@@ -15,7 +15,7 @@ export default () => {
   const [error, setError] = useState("");
 
   const onSubmit = (data) => {
-    api.post("usuarios", data)
+    api.post("auth/v1/api/usuarios", data)
       .then((respo) => {
         if (respo.status === 201) {
           setValido(true);

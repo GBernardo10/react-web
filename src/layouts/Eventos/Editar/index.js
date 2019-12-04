@@ -160,9 +160,9 @@ export default () => {
                                         <option value="" disabled selected>
                                             Defina uma categoria para o evento
                                         </option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                        <option value="1">Esporte</option>
+                                        <option value="2">Festa</option>
+                                        <option value="3">Encontros</option>
                                     </select>
                                     <label htmlFor="categoria">Categoria</label>
                                 </div>
@@ -178,7 +178,7 @@ export default () => {
                                           name="btn_login"
                                           className="col s12 btn btn-large waves-effect indigo"
                                         >
-                                            Acessar
+                                            Salvar
                                         </button>
                                     </div>
                                 </center>

@@ -26,7 +26,7 @@ export default () => {
       const apelido = localStorage.getItem("apelido");
       setLoading(true);
       await api
-        .get(`usuarios/apelido/${apelido}`)
+        .get(`auth/v1/api/usuarios/apelido/${apelido}`)
         .then((res) => {
           setUsuario(res.data);
           setLoad(true);
@@ -70,7 +70,19 @@ export default () => {
                         </Dropdown>
                     </NavItem>
                 ) : (
-                    <p>loading</p>
+                    <Dropdown
+                      trigger={(
+                            <Avatar
+                              style={{ position: "absolute", top: "17%" }}
+                              src={userPic}
+                            />
+                          )}
+                    >
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to={`/perfil/${id}`}>Perfil</NavLink>
+                        <NavItem divider />
+                        <NavItem />
+                    </Dropdown>
                 )}
             </Navbar>
     </>

@@ -53,7 +53,7 @@ export default (props) => {
     const buscaEventos = async () => {
       setLoading(true);
       await api
-        .get(`eventos/${url.id}`)
+        .get(`eventos/v1/api/eventos/${url.id}`)
         .then((res) => {
           setEventos(res.data);
           setEnderecos("rua valenca do minho 159");
@@ -202,7 +202,6 @@ export default (props) => {
                                 <div style={{ height: "100vh", width: "100%" }}>
                                     {load ? (
                                         <Map
-                                          disableDefaultUI
                                           google={google}
                                           zoom={12}
                                             //   style={mapStyles}
@@ -254,18 +253,18 @@ export default (props) => {
                                         </Map>
                                     ) : null}
                                 </div>
-                                <span className="card-title">Card Title</span>
+                                <span className="card-title">{eventos.titulo}</span>
                             </div>
                             <div className="card-content">
-                                <p>
+                                {/* <p>
                                     I am a very simple card. I am good at
                                     containing small bits of information. I am
                                     convenient because I require little markup
                                     to use effectively.
-                                </p>
+                                </p> */}
                             </div>
                             <div className="card-action">
-                                <a href="#">This is a link</a>
+                                {/* <a href="#">This is a link</a> */}
                             </div>
                         </div>
                     </div>

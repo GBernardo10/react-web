@@ -34,7 +34,7 @@ export default () => {
     const buscaUsuario = async () => {
       setLoading(true);
       await api
-        .get(`usuarios/apelido/${localStorage.getItem("apelido")}`)
+        .get(`auth/v1/api/usuarios/apelido/${localStorage.getItem("apelido")}`)
         .then((res) => {
           setUsuario(res.data);
           setEventosOrganizados(res.data.eventosOrganizados);
@@ -98,7 +98,7 @@ export default () => {
                                 </div>
                                 <div className="col s2 center-align">
                                     <h4 className="card-title grey-text text-darken-4">
-                                        {}
+                                        {contador}
                                     </h4>
                                     <p className="medium-small grey-text">
                                         Eventos Participante
@@ -106,10 +106,10 @@ export default () => {
                                 </div>
                                 <div className="col s2 center-align">
                                     <h4 className="card-title grey-text text-darken-4">
-                                        $ 1,253,000
+                                        {}
                                     </h4>
                                     <p className="medium-small grey-text">
-                                        Busness Profit
+                                        {}
                                     </p>
                                 </div>
                                 <div className="col s1 right-align">
@@ -133,18 +133,12 @@ export default () => {
                                                   <div className="card-image">
                                                       <img src={imgUser} />
                                                       <span className="card-title">
-                                                          Card Title
+                                                          {d.titulo}
                                                       </span>
                                                   </div>
                                                   <div className="card-content">
                                                       <p>
-                                                          I am a very simple
-                                                          card. I am good at
-                                                          containing small bits
-                                                          of information. I am
-                                                          convenient because I
-                                                          require little markup
-                                                          to use effectively.
+                                                          {d.descricao}
                                                       </p>
                                                   </div>
                                                   <div className="card-action">
@@ -174,18 +168,12 @@ export default () => {
                                                   <div className="card-image">
                                                       <img src={imgUser} />
                                                       <span className="card-title">
-                                                          Card Title
+                                                          {d.titulo}
                                                       </span>
                                                   </div>
                                                   <div className="card-content">
                                                       <p>
-                                                          I am a very simple
-                                                          card. I am good at
-                                                          containing small bits
-                                                          of information. I am
-                                                          convenient because I
-                                                          require little markup
-                                                          to use effectively.
+                                                          {d.descricao}
                                                       </p>
                                                   </div>
                                                   <div className="card-action">

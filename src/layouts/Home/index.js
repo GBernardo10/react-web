@@ -34,10 +34,27 @@ export default () => {
   const [loadEventos, setLoadEventos] = useState(false);
   const [allEventos, setAllEventos] = useState([]);
   const [loadAllEventos, setLoadAllEventos] = useState(false);
+  const [inputs, setInputs] = useState("");
+
+  const verifica = () => {
+    console.log(results);
+    if (results.length > 0) {
+      setLoadEventos(true);
+    }
+  };
+
+  const pesquisar = () => {
+    api.get(`pesquisa/v1/api/eventos/pesquisa/${inputs}`)
+      .then((res) => {
+        setResults(res.data);
+      })
+      .catch((err) => console.error(err));
+    verifica();
+  };
 
   useEffect(() => {
     const carregaEventos = () => {
-      api.get("eventos").then((res) => {
+      api.get("eventos/v1/api/eventos").then((res) => {
         setAllEventos(res.data);
         setLoadAllEventos(true);
       });
@@ -45,24 +62,26 @@ export default () => {
     carregaEventos();
   }, []);
   let teste = allEventos.slice(1, 5);
-  console.log(teste);
 
   //   const API_URL = "https://api.themoviedb.org/3/search/movie?query=${val}&api_key=dbc0a6d62448554c27b6167ef7dabb1b";
-
   const handleInputChange = (e) => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?query=${e.target.value}&api_key=dbc0a6d62448554c27b6167ef7dabb1b`
-      )
-      .then((res) => {
-        setResults(res.data);
-        setLoadEventos(true);
-      })
-      .catch((err) => {
-        setLoadEventos(false);
-      });
-    // .then(res=>setResults(res.data))
+    setInputs(e.target.value);
   };
+    //   const handleInputChange = (e) => {
+    //     api.get(
+    //       `pesquisa/v1/api/eventos/pesquisa/${e.target.value}`
+    //       // `https://api.themoviedb.org/3/search/movie?query=${e.target.value}&api_key=dbc0a6d62448554c27b6167ef7dabb1b`
+    //     )
+    //       .then((res) => {
+    //         setResults(res.data);
+    //       })
+    //       .catch((err) => {
+    //         setLoadEventos(false);
+    //       });
+    //     verifica();
+    //     // setLoadEventos(true);
+    //     // .then(res=>setResults(res.data))
+    //   };
 
   const handleOpen = () => {
     setOpen(true);
@@ -74,7 +93,7 @@ export default () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    api.post("eventos", data).then((res) => {
+    api.post("eventos/v1/api/eventos", data).then((res) => {
       if (res.status === 201) {
         handleClose();
         alert("Evento criado com sucesso");
@@ -406,13 +425,24 @@ export default () => {
                             </a>
                         )}
 
-                        <a className="col s5 button-bora waves-effect waves-light purple darken-4 btn-large">
-                            <i className="material-icons left">sentiment_very_satisfied</i>
+                        <a
+                          onClick={pesquisar}
+                          className="col s5 button-bora waves-effect waves-light purple darken-4 btn-large"
+                        >
+                            <i className="material-icons left">
+                                sentiment_very_satisfied
+                            </i>
                             Bora
                         </a>
                     </div>
                 </div>
-            <div style={{ backgroundColor: "#2b0125", with: "100%", height: "70px" }} />
+                <div
+                  style={{
+                    backgroundColor: "#2b0125",
+                    with: "100%",
+                    height: "70px"
+                  }}
+                />
             </div>
             <div className="row">
                 <Container>

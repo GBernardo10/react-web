@@ -13,7 +13,7 @@ export default () => {
   const [toPerfil, setToPerfil] = useState(false);
   const [error, setError] = useState("");
   const onSubmit = (data) => {
-    api.post("login", data)
+    api.post("auth/v1/api/login", data)
       .then((resp) => {
         if (resp.status === 200) {
           login(resp.data.token);
