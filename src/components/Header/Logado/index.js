@@ -7,14 +7,15 @@ import "../../../styles/navbar.css";
 import { Avatar } from "@material-ui/core";
 import Container from "react-materialize/lib/Container";
 import { api } from "../../../services";
+import userPic from "../../../assets/flat-geometric-shapes-background/user.png";
 
 export default () => {
   const [usuario, setUsuario] = useState({});
+  console.log(usuario);
   const [loading, setLoading] = useState(false);
   const [load, setLoad] = useState(false);
   const [foto, setFoto] = useState("");
   const id = localStorage.getItem("apelido");
-
 
   const handleClick = () => {
     localStorage.clear();
@@ -41,18 +42,24 @@ export default () => {
 
   return (
     <>
-            <Navbar className="purple darken-3">
+            <Navbar className="nav-color">
                 <NavLink className="brand-logo center" to="/">
                     BORA
                 </NavLink>
-                <NavItem onClick={handleClick}>sair</NavItem>
+                <NavLink to="/" onClick={handleClick}>
+                    sair
+                </NavLink>
                 {load ? (
                     <NavItem>
                         <Dropdown
                           trigger={(
                                 <Avatar
                                   style={{ position: "absolute", top: "17%" }}
-                                  src={`data:image/jpeg;base64,${foto}`}
+                                  src={
+                                        usuario.fotoPerfil !== null && undefined
+                                          ? `data:image/jpeg;base64,${foto}`
+                                          : userPic
+                                    }
                                 />
                               )}
                         >

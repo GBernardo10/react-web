@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -6,9 +8,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/order */
 import axios from "axios";
-
 import { Modal, makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+import { Carousel } from "../../components/Carousel";
 import "../../styles/Home/home.css";
 import { NavLink, Redirect } from "react-router-dom";
 import useForm from "react-hook-form";
@@ -16,6 +18,8 @@ import Card from "react-materialize/lib/Card";
 import Container from "react-materialize/lib/Container";
 import { isAuthenticated } from "../../services/auth";
 import { api } from "../../services";
+import { Eventos } from "../../components/ListEventos";
+import bg from "../../assets/flat-geometric-shapes-background/bg-detalheEventos.png";
 
 export default () => {
   const { register, handleSubmit, errors } = useForm();
@@ -26,7 +30,39 @@ export default () => {
   const [coordenada, setCoordenada] = useState({});
   const [endereco, setEndereco] = useState({});
   const [usuarioNaoLogado, setUsuarioNaoLogado] = useState(false);
+  const [results, setResults] = useState([]);
+  const [loadEventos, setLoadEventos] = useState(false);
+  const [allEventos, setAllEventos] = useState([]);
+  const [loadAllEventos, setLoadAllEventos] = useState(false);
 
+  useEffect(() => {
+    const carregaEventos = () => {
+      api.get("eventos").then((res) => {
+        setAllEventos(res.data);
+        setLoadAllEventos(true);
+      });
+    };
+    carregaEventos();
+  }, []);
+  let teste = allEventos.slice(1, 5);
+  console.log(teste);
+
+  //   const API_URL = "https://api.themoviedb.org/3/search/movie?query=${val}&api_key=dbc0a6d62448554c27b6167ef7dabb1b";
+
+  const handleInputChange = (e) => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?query=${e.target.value}&api_key=dbc0a6d62448554c27b6167ef7dabb1b`
+      )
+      .then((res) => {
+        setResults(res.data);
+        setLoadEventos(true);
+      })
+      .catch((err) => {
+        setLoadEventos(false);
+      });
+    // .then(res=>setResults(res.data))
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -35,7 +71,6 @@ export default () => {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const onSubmit = (data) => {
     console.log(data);
@@ -48,7 +83,6 @@ export default () => {
       }
     });
   };
-
 
   const handleOpenNotAutenticado = () => {
     setUsuarioNaoLogado(true);
@@ -340,9 +374,10 @@ export default () => {
             </Modal>
             <div className="row">
                 <div className="header-home">
-                    <h1>O que voce quer fazer ?</h1>
+                    <h1 className="titulo-home">O que voce quer fazer ?</h1>
                     <div className="input-field col s12">
                         <input
+                          onChange={handleInputChange}
                           type="text"
                           id="autocomplete-input"
                           className="input-home autocomplete search-box validate white search-circle"
@@ -353,28 +388,71 @@ export default () => {
                     <div className="section-botoes section scrollspy">
                         {isAuthenticated() ? (
                             <a
+                              style={{ backgroundColor: "#721734" }}
                               onClick={handleOpen}
                               className="col s6 button-bora waves-effect waves-light btn-large"
                             >
-                                <i className="material-icons left">cloud</i>
+                                <i className="material-icons left">share</i>
                                 Criar Role
                             </a>
                         ) : (
                             <a
+                              style={{ backgroundColor: "#721734" }}
                               onClick={handleOpenNotAutenticado}
                               className="col s6 button-bora waves-effect waves-light btn-large"
                             >
-                                <i className="material-icons left">cloud</i>
+                                <i className="material-icons left">share</i>
                                 Criar Role
                             </a>
                         )}
 
                         <a className="col s5 button-bora waves-effect waves-light purple darken-4 btn-large">
-                            <i className="material-icons left">cloud</i>
+                            <i className="material-icons left">sentiment_very_satisfied</i>
                             Bora
                         </a>
                     </div>
                 </div>
+            <div style={{ backgroundColor: "#2b0125", with: "100%", height: "70px" }} />
+            </div>
+            <div className="row">
+                <Container>
+                    {loadEventos ? (
+                        <Eventos dados={results} />
+                    ) : loadAllEventos ? (
+                      allEventos.slice(0, 8).map((res) => (
+                            <div className="col s4">
+                                <span key={res.idEvento}>
+                                    {console.log(res)}
+                                    <div className="card">
+                                        <div className="card-image">
+                                            <img
+                                              style={{
+                                                backgroundSize: "cover"
+                                              }}
+                                              src={bg}
+                                            />
+                                            <span className="truncate card-title">
+                                                <p className="color-titulo-home">
+                                                    {res.titulo}
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div className="card-content">
+                                            <p>{res.descricao}</p>
+                                        </div>
+                                        <div className="card-action">
+                                            <NavLink
+                                              to={`/perfil/eventos/${res.idEvento}`}
+                                            >
+                                                Detalhes
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                      ))
+                    ) : null}
+                </Container>
             </div>
         </main>
   );

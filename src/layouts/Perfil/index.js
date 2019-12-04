@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -21,8 +22,11 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [load, setLoad] = useState(false);
   const [eventosOrganizados, setEventosOrganizados] = useState([]);
+  console.log(`usuario ${usuario}`);
+  console.log(`eventos ${eventosOrganizados}`);
   const quantidadeEventosOrganizado = [];
   let contador = 0;
+  console.log(usuario);
 
   const url = useRouteMatch().params;
 
@@ -35,7 +39,6 @@ export default () => {
           setUsuario(res.data);
           setEventosOrganizados(res.data.eventosOrganizados);
           console.log(res.data);
-
           setLoad(true);
           setLoading(false);
         })
@@ -44,7 +47,7 @@ export default () => {
     buscaUsuario();
   }, []);
 
-  if (load) {
+  if (load && eventosOrganizados.length > 0) {
     quantidadeEventosOrganizado.push(usuario.eventosOrganizados);
 
     for (
@@ -82,7 +85,7 @@ export default () => {
                                         {usuario.apelido}
                                     </h4>
                                     <p className="medium-small grey-text">
-                                        Project Manager
+                                        Iniciante
                                     </p>
                                 </div>
                                 <div className="col s2 center-align">
@@ -95,10 +98,10 @@ export default () => {
                                 </div>
                                 <div className="col s2 center-align">
                                     <h4 className="card-title grey-text text-darken-4">
-                                        6
+                                        {}
                                     </h4>
                                     <p className="medium-small grey-text">
-                                        Completed Projects
+                                        Eventos Participante
                                     </p>
                                 </div>
                                 <div className="col s2 center-align">
@@ -119,6 +122,47 @@ export default () => {
                     </div>
                 </div>
                 <h2 className="header">Eventos Organizado</h2>
+                {load ? (
+                    <Carousel>
+                        {load
+                          ? eventosOrganizados.map((d, i) => (
+                                  <span key={i}>
+                                      <div className="row">
+                                          <div className="col s12 m7">
+                                              <div className="card">
+                                                  <div className="card-image">
+                                                      <img src={imgUser} />
+                                                      <span className="card-title">
+                                                          Card Title
+                                                      </span>
+                                                  </div>
+                                                  <div className="card-content">
+                                                      <p>
+                                                          I am a very simple
+                                                          card. I am good at
+                                                          containing small bits
+                                                          of information. I am
+                                                          convenient because I
+                                                          require little markup
+                                                          to use effectively.
+                                                      </p>
+                                                  </div>
+                                                  <div className="card-action">
+                                                      <NavLink
+                                                          to={`eventos/${d.idEvento}`}
+                                                      >
+                                                          Detalhes
+                                                      </NavLink>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </span>
+                          ))
+                          : null}
+                    </Carousel>
+                ) : null}
+                <h2 className="header">Eventos confirmado</h2>
                 {load ? (
                     <Carousel>
                         {load

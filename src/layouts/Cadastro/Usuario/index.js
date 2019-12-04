@@ -12,13 +12,18 @@ import { api } from "../../../services";
 export default () => {
   const { register, handleSubmit, errors } = useForm();
   const [valido, setValido] = useState(false);
+  const [error, setError] = useState("");
 
   const onSubmit = (data) => {
-    api.post("usuarios", data).then((respo) => {
-      if (respo.status === 201) {
-        setValido(true);
-      }
-    });
+    api.post("usuarios", data)
+      .then((respo) => {
+        if (respo.status === 201) {
+          setValido(true);
+        }
+      })
+      .catch((err) => setError(
+        "Apelido e/ou email ja existentes, tente outra combição :)"
+      ));
   };
   return (
         <Container>
@@ -41,19 +46,23 @@ export default () => {
                                           name="apelido"
                                           id="apelido"
                                           ref={register({
-                                              required:
+                                            required:
                                                     "Escolha um apelido legal para voce ser conhecido mais facilmente",
-                                              maxLength: {
-                                                value: 20,
-                                                message:
+                                            maxLength: {
+                                              value: 20,
+                                              message:
                                                         "Tamanho maximo é 20"
-                                              },
-                                              minLength: {
-                                                value: 2,
-                                                message:
+                                            },
+                                            minLength: {
+                                              value: 2,
+                                              message:
                                                         "Tamanho minimo é 2, voce consegue"
-                                              }
-                                            })}
+                                            },
+                                            pattern: {
+                                              value: /^[A-Za-z0-9]+$/i,
+                                              message: "Deixa espaço em branco não cara, ajuda ai :)"
+                                            }
+                                          })}
                                         />
                                         <label htmlFor="apelido">
                                             Digite seu apelido
@@ -76,19 +85,19 @@ export default () => {
                                           name="email"
                                           id="email"
                                           ref={register({
-                                              required:
+                                            required:
                                                     "É necessario o email, pode ser util no futuro",
-                                              pattern: {
-                                                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                                                message:
+                                            pattern: {
+                                              value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                              message:
                                                         "Acho que seu email nao esta correto, tente novamente"
-                                              },
-                                              maxlength: {
-                                                value: 30,
-                                                message:
+                                            },
+                                            maxlength: {
+                                              value: 30,
+                                              message:
                                                         "Que email é esse, escolha um menor"
-                                              }
-                                            })}
+                                            }
+                                          })}
                                         />
                                         <label htmlFor="email">
                                             Digite seu email
@@ -113,14 +122,14 @@ export default () => {
                                           maxLength="15"
                                           id="senha"
                                           ref={register({
-                                              required:
+                                            required:
                                                     "Sem senha, voce nao consegue se logar",
-                                              maxlength: {
-                                                value: 15,
-                                                message:
+                                            maxlength: {
+                                              value: 15,
+                                              message:
                                                         "Tamanho maximo para a senha 15 digitos"
-                                              }
-                                            })}
+                                            }
+                                          })}
                                         />
                                         <label htmlFor="senha">
                                             Digite sua senha
@@ -156,8 +165,17 @@ export default () => {
                                           name="btn_login"
                                           className="col s12 btn btn-large waves-effect indigo"
                                         >
-                                            Acessar
+                                            Criar conta
                                         </button>
+                                    </div>
+                                    <div className="row">
+                                        <div className="input-field col s6 m6 l6">
+                                            {error && (
+                                                <p className="margin medium-small">
+                                                    {error}
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
                                 </center>
                             </form>

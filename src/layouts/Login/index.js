@@ -15,18 +15,24 @@ export default () => {
   const onSubmit = (data) => {
     api.post("login", data)
       .then((resp) => {
-        if (resp.status === 200) setToPerfil(true);
-        login(resp.data.token);
+        if (resp.status === 200) {
+          login(resp.data.token);
+          localStorage.setItem("apelido", data.apelido);
+          setToPerfil(true);
+        }
       })
       .catch((err) => {
         setError("Usuario e/ou senha incorretos");
       });
-    localStorage.setItem("apelido", data.apelido);
   };
   return (
         <Container>
             <div className="container">
-                {toPerfil ? <Redirect to="/perfil/:apelido" /> : null}
+                {toPerfil ? (
+                    <Redirect
+                      to={`/perfil/${localStorage.getItem("apelido")}`}
+                    />
+                ) : null}
                 <Card>
                     <h4 className="center-align">
                         Bem vindo, acesse sua conta

@@ -6,7 +6,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink, Redirect, useRouteMatch } from "react-router-dom";
-import { Map, Marker, InfoWindow } from "google-maps-react";
+import { Map, InfoWindow, Marker } from "google-maps-react";
+import { Today } from "@material-ui/icons";
 
 import bg from "../../assets/flat-geometric-shapes-background/bg-detalheEventos.png";
 import imgUser from "../../assets/flat-geometric-shapes-background/user.png";
@@ -44,6 +45,10 @@ export default (props) => {
     setShowingInfoWindow(true);
   };
 
+  const teste = () => {
+    alert("ok");
+  };
+
   useEffect(() => {
     const buscaEventos = async () => {
       setLoading(true);
@@ -77,14 +82,6 @@ export default (props) => {
       // setLoad(true);
     }
   );
-
-  const handle = () => {};
-
-  //   const MapsClient = () => googleMapsClient.createClient({
-  //     key: "AIzaSyDTjPz7a0H6P78ccjbZHuL0fpPOY8UwQN4",
-  //     Promise
-  //   });
-  //   MapsClient();
 
   return (
     <>
@@ -132,15 +129,19 @@ export default (props) => {
                                         Completed Projects
                                     </p>
                                 </div>
-                                <div className="col s2 center-align">
+                                <div className="col s3 center-align">
                                     <h4 className="card-title grey-text text-darken-4">
                                         $ 1,253,000
                                     </h4>
-                                    <p className="medium-small grey-text">
-                                        Busness Profit
-                                    </p>
+
+                                    <a className="waves-effect waves-light btn">
+                                        <i className="material-icons left">
+                                            cloud
+                                        </i>
+                                        Participar
+                                    </a>
                                 </div>
-                                <div className="col s1 right-align">
+                                <div className="col s12 right-align">
                                     <NavLink to={`editar/${url.id}`}>
                                         <a className="btn-floating activator waves-effect waves-light darken-2 right">
                                             <i className="material-icons prefix">
@@ -201,6 +202,7 @@ export default (props) => {
                                 <div style={{ height: "100vh", width: "100%" }}>
                                     {load ? (
                                         <Map
+                                          disableDefaultUI
                                           google={google}
                                           zoom={12}
                                             //   style={mapStyles}
@@ -209,17 +211,29 @@ export default (props) => {
                                             lng: geo.longitude
                                           }}
                                         >
-                                            {dados.map((value) => (
+                                            {/* <CustomMarker
+
+                                            >
+
+                                            </CustomMarker> */}
+                                            <Marker
+                                              position={{
+                                                lat: geo.latitude,
+                                                lng: geo.longitude
+                                              }}
+                                            />
+
+                                            {/* {dados.map((value) => (
                                                 <Marker
                                                   name="ds"
                                                   key={value.id}
                                                   onClick={() => console.log(value.id)}
                                                   position={{
-                                                    lat: value.lat,
-                                                    lng: value.lng
-                                                  }}
+                                                      lat: value.lat,
+                                                      lng: value.lng
+                                                    }}
                                                 />
-                                            ))}
+                                            ))} */}
                                             {/* {console.log()} */}
                                             <InfoWindow
                                                 // marker={this.state.activeMarker}

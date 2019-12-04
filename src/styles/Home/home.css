@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300, 400, 700);
 @import url(https://cdn.cloudcache.dk/materialize/0.95.3/css/materialize-fonts.css);
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
 
 .header-home {
     width: 100%;
@@ -26,4 +27,18 @@
     border-radius: 20px !important;
     padding: 1% !important;
     height: 0% !important;
+}
+.titulo-home {
+    font-family: "Lobster", cursive;
+}
+
+.color-titulo-home {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 1%;
+    -webkit-text-stroke-width: 0.4px;
+    -webkit-text-stroke-color: #000;
+    color: #a188ff;
+    display: flex;
+    justify-content: flex-start;
 }
