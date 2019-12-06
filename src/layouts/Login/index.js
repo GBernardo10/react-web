@@ -9,28 +9,28 @@ import { api } from "../../services";
 import { login } from "../../services/auth";
 
 export default () => {
-  const { register, handleSubmit, errors } = useForm();
-  const [toPerfil, setToPerfil] = useState(false);
-  const [error, setError] = useState("");
-  const onSubmit = (data) => {
-    api.post("login", data)
-      .then((resp) => {
-        if (resp.status === 200) {
-          login(resp.data.token);
-          localStorage.setItem("apelido", data.apelido);
-          setToPerfil(true);
-        }
-      })
-      .catch((err) => {
-        setError("Usuario e/ou senha incorretos");
-      });
-  };
-  return (
+    const { register, handleSubmit, errors } = useForm();
+    const [toPerfil, setToPerfil] = useState(false);
+    const [error, setError] = useState("");
+    const onSubmit = async (data) => {
+        await api.post("login", data)
+            .then((resp) => {
+                if (resp.status === 200) {
+                    login(resp.data.token);
+                    localStorage.setItem("apelido", data.apelido);
+                    setToPerfil(true);
+                }
+            })
+            .catch((err) => {
+                setError("Usuario e/ou senha incorretos");
+            });
+    };
+    return (
         <Container>
             <div className="container">
                 {toPerfil ? (
                     <Redirect
-                      to={`/perfil/${localStorage.getItem("apelido")}`}
+                        to={`/perfil/${localStorage.getItem("apelido")}`}
                     />
                 ) : null}
                 <Card>
@@ -47,11 +47,11 @@ export default () => {
                                             account_circle
                                         </i>
                                         <input
-                                          className="validate"
-                                          type="text"
-                                          name="apelido"
-                                          id="apelido"
-                                          ref={register({ required: true })}
+                                            className="validate"
+                                            type="text"
+                                            name="apelido"
+                                            id="apelido"
+                                            ref={register({ required: true })}
                                         />
                                         <label htmlFor="apelido">
                                             Digite seu apelido
@@ -70,11 +70,11 @@ export default () => {
                                             lock
                                         </i>
                                         <input
-                                          className="validate"
-                                          type="password"
-                                          name="senha"
-                                          id="senha"
-                                          ref={register({ required: true })}
+                                            className="validate"
+                                            type="password"
+                                            name="senha"
+                                            id="senha"
+                                            ref={register({ required: true })}
                                         />
                                         <label htmlFor="senha">
                                             Digite sua senha
@@ -89,8 +89,8 @@ export default () => {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12  login-text">
                                         <input
-                                          type="checkbox"
-                                          id="remember-me"
+                                            type="checkbox"
+                                            id="remember-me"
                                         />
                                         <label htmlFor="remember-me">
                                             Lembrar de mim
@@ -100,12 +100,12 @@ export default () => {
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <button
-                                          disabled={
+                                            disabled={
                                                 errors.apelido || errors.senha
                                             }
-                                          type="submit"
-                                          name="btn_login"
-                                          className="col s12 btn btn-large waves-effect indigo"
+                                            type="submit"
+                                            name="btn_login"
+                                            className="col s12 btn btn-large waves-effect indigo"
                                         >
                                             Acessar
                                         </button>
@@ -141,5 +141,5 @@ export default () => {
                 </Card>
             </div>
         </Container>
-  );
+    );
 };
