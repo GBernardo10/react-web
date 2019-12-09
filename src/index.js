@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import {inicializarFirebase} from './components/PushNotification';
 import "./styles/global.css";
 import App from "./App";
 
@@ -10,3 +11,4 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById("root")
 );
+inicializarFirebase()
