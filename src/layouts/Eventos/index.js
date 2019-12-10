@@ -27,12 +27,12 @@ export default (props) => {
   const [load, setLoad] = useState(false);
   const [loading, setLoading] = useState(false);
   const dados = [
-    { lat: 47.49855629475769, lng: -122.14184416996333, id: 1 },
-    { lat: 47.359423, lng: -122.021071, id: 2 },
-    { lat: 47.2052192687988, lng: -121.988426208496, id: 3 },
-    { lat: 47.6307081, lng: -122.1434325, id: 4 },
-    { lat: 47.3084488, lng: -122.2140121, id: 5 },
-    { lat: 47.5524695, lng: -122.0425407, id: 6 }
+    { lat: -23.5572013, lng: 46.6631637, id: 10 },
+    { lat: -23.5585806, lng: -46.6593165, id: 9 },
+    { lat: 23.56108, lng: -46.655961, id: 8 },
+    // { lat: 47.6307081, lng: -122.1434325, id: 4 },
+    // { lat: 47.3084488, lng: -122.2140121, id: 5 },
+    // { lat: 47.5524695, lng: -122.0425407, id: 6 }
   ];
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
 
@@ -126,12 +126,13 @@ export default (props) => {
                                         6
                                     </h4>
                                     <p className="medium-small grey-text">
-                                        Completed Projects
+                                        Nota
+                                        {/* Completed Projects */}
                                     </p>
                                 </div>
                                 <div className="col s3 center-align">
                                     <h4 className="card-title grey-text text-darken-4">
-                                        $ 1,253,000
+                                        {/* $ 1,253,000 */}
                                     </h4>
 
                                     <a className="waves-effect waves-light btn">
@@ -222,17 +223,17 @@ export default (props) => {
                                               }}
                                             />
 
-                                            {/* {dados.map((value) => (
+                                            {dados.map((value) => (
                                                 <Marker
                                                   name="ds"
                                                   key={value.id}
                                                   onClick={() => console.log(value.id)}
                                                   position={{
-                                                      lat: value.lat,
-                                                      lng: value.lng
-                                                    }}
+                                                    lat: value.lat,
+                                                    lng: value.lng
+                                                  }}
                                                 />
-                                            ))} */}
+                                            ))}
                                             {/* {console.log()} */}
                                             <InfoWindow
                                                 // marker={this.state.activeMarker}

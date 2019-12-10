@@ -13,6 +13,7 @@ import { NavLink, useRouteMatch } from "react-router-dom";
 import { Carousel } from "../../components/Carousel";
 import bg from "../../assets/flat-geometric-shapes-background/bg-detalheEventos.png";
 import imgUser from "../../assets/flat-geometric-shapes-background/user.png";
+import part from "../../assets/flat-geometric-shapes-background/fest.png";
 import { api } from "../../services";
 import "../../styles/perfil/perfil.css";
 import Container from "react-materialize/lib/Container";
@@ -133,11 +134,11 @@ export default () => {
                                                   <div className="card-image">
                                                       <img src={imgUser} />
                                                       <span className="card-title">
-                                                          {d.titulo}
+                                                          <p style={{ color: "black" }}>{d.titulo}</p>
                                                       </span>
                                                   </div>
                                                   <div className="card-content">
-                                                      <p>
+                                                      <p style={{ color: "black" }}>
                                                           {d.descricao}
                                                       </p>
                                                   </div>
@@ -166,9 +167,9 @@ export default () => {
                                           <div className="col s12 m7">
                                               <div className="card">
                                                   <div className="card-image">
-                                                      <img src={imgUser} />
+                                                      <img src={part} />
                                                       <span className="card-title">
-                                                          {d.titulo}
+                                                          <div style={{ color: "black" }}>{d.titulo}</div>
                                                       </span>
                                                   </div>
                                                   <div className="card-content">

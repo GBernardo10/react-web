@@ -34,7 +34,7 @@ export const Eventos = ({ dados }) => {
                             <p>
                                 <a>
                                     <NavLink to={`/perfil/eventos/${res.idEvento}`}>
-                                        This is a link
+                                        Detalhe
                                     </NavLink>
                                 </a>
                             </p>
