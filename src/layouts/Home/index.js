@@ -113,347 +113,362 @@ export default () => {
 
   return (
         <main>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={usuarioNaoLogado}
-              onClose={handleCloseNotAutenticado}
-            >
-                <Container>
-                    <Card
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        margin: "20%"
-                      }}
-                    >
-                        <i
-                          onClick={handleCloseNotAutenticado}
-                          className="material-icons prefix"
-                        >
-                            close
-                        </i>
-                        <h4 className="center-align">
-                            Para criar eventos, voce deve estar logado
-{" "}
-                        </h4>
-                        <div className="row">
-                            <div className="col s12">
-                                <div className="row" />
-                                <div className="row">
-                                    <div className="input-field col s6 m6 l6">
-                                        <p className="margin medium-small">
-                                            <NavLink to="/cadastro">
-                                                Não tem conta? Crie agora é
-                                                gratis!
-                                            </NavLink>
-                                        </p>
-                                    </div>
-                                    <div className="input-field col s6 m6 l6">
-                                        <p className="margin right-align medium-small">
-                                            <NavLink to="/login">
-                                                Ja tem uma conta? Acesse aqui!
-                                            </NavLink>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Card>
-                </Container>
-            </Modal>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={open}
-              onClose={handleClose}
-            >
-                <Container>
-                    <Card>
-                        <h4 className="center-align">
-                            Preencha os campo para criar seu evento
-                        </h4>
-                        <div className="row">
-                            <div className="col s12">
-                                <form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="row" />
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <i className="material-icons prefix">
-                                                mood
-                                            </i>
-                                            <input
-                                              className="validate"
-                                              type="text"
-                                              name="titulo"
-                                              id="titulo"
-                                              ref={register({
-                                                required: true
-                                              })}
-                                            />
-                                            <label htmlFor="titulo">
-                                                Digite o titulo do evento
-                                            </label>
-                                            {errors.titulo && (
-                                                <small>
-                                                    Escolha um titulo para o seu
-                                                    evento
-                                                </small>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s6">
-                                            <i className="material-icons prefix">
-                                                room
-                                            </i>
-                                            <input
-                                              className="validate"
-                                              type="text"
-                                              name="cep"
-                                              id="cep"
-                                              onBlur={
-                                                    load
-                                                      ? retornaCoordenada
-                                                      : null
-                                                }
-                                              onChange={handleCEP}
-                                              ref={register({
-                                                required: true
-                                              })}
-                                            />
-                                            <label htmlFor="cep">
-                                                Digite o CEP, do local do evento
-                                            </label>
-                                            {errors.cep && (
-                                                <small>
-                                                    Preencha o CEP, para a gente
-                                                    buscar o endereço :)
-                                                </small>
-                                            )}
-                                        </div>
-
-                                        <div className="input-field col s6">
-                                            <i className="material-icons prefix">
-                                                my_location
-                                            </i>
-                                            <input
-                                              id="rua"
-                                              name="rua"
-                                              placeholder="Rua"
-                                              type="text"
-                                              ref={register({
-                                                required: true
-                                              })}
-                                              disabled
-                                              className="validate"
-                                              value={
-                                                    load
-                                                      ? endereco.logradouro
-                                                      : null
-                                                }
-                                            />
-                                        </div>
-
-                                        <div className="input-field col s6">
-                                            <i className="material-icons prefix">
-                                                pin_drop
-                                            </i>
-                                            <input
-                                              id="numero"
-                                              name="numero"
-                                              type="text"
-                                              className="validate"
-                                              ref={register({
-                                                required: true
-                                              })}
-                                            />
-                                            <label htmlFor="numero">
-                                                Numero
-                                            </label>
-                                            {errors.numero && (
-                                                <small>
-                                                    Preenche o numero do local
-                                                    ae :) :)
-                                                </small>
-                                            )}
-                                        </div>
-                                        <div className="input-field col s6">
-                                            <i className="material-icons prefix">
-                                                location_city
-                                            </i>
-                                            <input
-                                              id="bairro"
-                                              type="text"
-                                              name="bairro"
-                                              disabled
-                                              className="validate"
-                                              placeholder="Bairro"
-                                              ref={register({
-                                                required: true
-                                              })}
-                                              value={
-                                                    load
-                                                      ? endereco.bairro
-                                                      : null
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div style={{ display: "none" }}>
-                                        <input
-                                          id="latitude"
-                                          name="latitude"
-                                          ref={register({
-                                            required: true
-                                          })}
-                                          value={
-                                                temCoord
-                                                  ? coordenada.results[0]
-                                                    .geometry.location.lat
-                                                  : null
-                                            }
-                                        />
-                                        <input
-                                          id="longitude"
-                                          name="longitude"
-                                          ref={register({
-                                            required: true
-                                          })}
-                                          value={
-                                                temCoord
-                                                  ? coordenada.results[0]
-                                                    .geometry.location.lng
-                                                  : null
-                                            }
-                                        />
-                                        <input
-                                          id="usuario"
-                                          name="usuario"
-                                          ref={register({
-                                            required: true
-                                          })}
-                                          value={
-                                                load
-                                                  ? localStorage.getItem(
-                                                    "apelido"
-                                                  )
-                                                  : null
-                                            }
-                                        />
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <button
-                                              disabled={
-                                                    errors.apelido
-                                                    || errors.senha
-                                                }
-                                              type="submit"
-                                              name="btn_login"
-                                              className="col s12 btn btn-large waves-effect indigo"
-                                            >
-                                                Cadastrar Evento
-                                            </button>
-                                        </div>
-                                        <div className="row">
-                                            <div className="input-field col s6 m6 l6">
-                                                {error && (
-                                                    <p className="margin medium-small">
-                                                        {error}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </Card>
-                </Container>
-            </Modal>
-            <div className="row">
-                <div className="header-home">
-                    <h1 className="titulo-home">O que voce quer fazer ?</h1>
-                    <div className="input-field col s12">
+            <div className="field">
+                <div className="ui search">
+                    <div className="ui icon input">
                         <input
-                          onChange={handleInputChange}
+                          className="prompt"
                           type="text"
-                          id="autocomplete-input"
-                          className="input-home autocomplete search-box validate white search-circle"
-                          placeholder="Pesquise eventos, roles, lugares, shows, Bora !"
+                          placeholder="Search countries..."
                         />
-                        <i className="material-icons prefix">search</i>
+                        <i className="search icon" />
                     </div>
-                    <div className="section-botoes section scrollspy">
-                        {isAuthenticated() ? (
-                            <a
-                              style={{ backgroundColor: "#721734" }}
-                              onClick={handleOpen}
-                              className="col s6 button-bora waves-effect waves-light btn-large"
-                            >
-                                <i className="material-icons left">share</i>
-                                Criar Role
-                            </a>
-                        ) : (
-                            <a
-                              style={{ backgroundColor: "#721734" }}
-                              onClick={handleOpenNotAutenticado}
-                              className="col s6 button-bora waves-effect waves-light btn-large"
-                            >
-                                <i className="material-icons left">share</i>
-                                Criar Role
-                            </a>
-                        )}
-
-                        <a className="col s5 button-bora waves-effect waves-light purple darken-4 btn-large">
-                            <i className="material-icons left">sentiment_very_satisfied</i>
-                            Bora
-                        </a>
-                    </div>
+                    <div className="results" />
                 </div>
-            <div style={{ backgroundColor: "#2b0125", with: "100%", height: "70px" }} />
-            </div>
-            <div className="row">
-                <Container>
-                    {loadEventos ? (
-                        <Eventos dados={results} />
-                    ) : loadAllEventos ? (
-                      allEventos.slice(0, 8).map((res) => (
-                            <div className="col s4">
-                                <span key={res.idEvento}>
-                                    {console.log(res)}
-                                    <div className="card">
-                                        <div className="card-image">
-                                            <img
-                                              style={{
-                                                backgroundSize: "cover"
-                                              }}
-                                              src={bg}
-                                            />
-                                            <span className="truncate card-title">
-                                                <p className="color-titulo-home">
-                                                    {res.titulo}
-                                                </p>
-                                            </span>
-                                        </div>
-                                        <div className="card-content">
-                                            <p>{res.descricao}</p>
-                                        </div>
-                                        <div className="card-action">
-                                            <NavLink
-                                              to={`/perfil/eventos/${res.idEvento}`}
-                                            >
-                                                Detalhes
-                                            </NavLink>
-                                        </div>
-                                    </div>
-                                </span>
-                            </div>
-                      ))
-                    ) : null}
-                </Container>
             </div>
         </main>
+        //         <main>
+        //             <Modal
+        //               aria-labelledby="simple-modal-title"
+        //               aria-describedby="simple-modal-description"
+        //               open={usuarioNaoLogado}
+        //               onClose={handleCloseNotAutenticado}
+        //             >
+        //                 <Container>
+        //                     <Card
+        //                       style={{
+        //                         display: "flex",
+        //                         justifyContent: "center",
+        //                         margin: "20%"
+        //                       }}
+        //                     >
+        //                         <i
+        //                           onClick={handleCloseNotAutenticado}
+        //                           className="material-icons prefix"
+        //                         >
+        //                             close
+        //                         </i>
+        //                         <h4 className="center-align">
+        //                             Para criar eventos, voce deve estar logado
+        // {" "}
+        //                         </h4>
+        //                         <div className="row">
+        //                             <div className="col s12">
+        //                                 <div className="row" />
+        //                                 <div className="row">
+        //                                     <div className="input-field col s6 m6 l6">
+        //                                         <p className="margin medium-small">
+        //                                             <NavLink to="/cadastro">
+        //                                                 Não tem conta? Crie agora é
+        //                                                 gratis!
+        //                                             </NavLink>
+        //                                         </p>
+        //                                     </div>
+        //                                     <div className="input-field col s6 m6 l6">
+        //                                         <p className="margin right-align medium-small">
+        //                                             <NavLink to="/login">
+        //                                                 Ja tem uma conta? Acesse aqui!
+        //                                             </NavLink>
+        //                                         </p>
+        //                                     </div>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //                     </Card>
+        //                 </Container>
+        //             </Modal>
+        //             <Modal
+        //               aria-labelledby="simple-modal-title"
+        //               aria-describedby="simple-modal-description"
+        //               open={open}
+        //               onClose={handleClose}
+        //             >
+        //                 <Container>
+        //                     <Card>
+        //                         <h4 className="center-align">
+        //                             Preencha os campo para criar seu evento
+        //                         </h4>
+        //                         <div className="row">
+        //                             <div className="col s12">
+        //                                 <form onSubmit={handleSubmit(onSubmit)}>
+        //                                     <div className="row" />
+        //                                     <div className="row">
+        //                                         <div className="input-field col s12">
+        //                                             <i className="material-icons prefix">
+        //                                                 mood
+        //                                             </i>
+        //                                             <input
+        //                                               className="validate"
+        //                                               type="text"
+        //                                               name="titulo"
+        //                                               id="titulo"
+        //                                               ref={register({
+        //                                                 required: true
+        //                                               })}
+        //                                             />
+        //                                             <label htmlFor="titulo">
+        //                                                 Digite o titulo do evento
+        //                                             </label>
+        //                                             {errors.titulo && (
+        //                                                 <small>
+        //                                                     Escolha um titulo para o seu
+        //                                                     evento
+        //                                                 </small>
+        //                                             )}
+        //                                         </div>
+        //                                     </div>
+        //                                     <div className="row">
+        //                                         <div className="input-field col s6">
+        //                                             <i className="material-icons prefix">
+        //                                                 room
+        //                                             </i>
+        //                                             <input
+        //                                               className="validate"
+        //                                               type="text"
+        //                                               name="cep"
+        //                                               id="cep"
+        //                                               onBlur={
+        //                                                     load
+        //                                                       ? retornaCoordenada
+        //                                                       : null
+        //                                                 }
+        //                                               onChange={handleCEP}
+        //                                               ref={register({
+        //                                                 required: true
+        //                                               })}
+        //                                             />
+        //                                             <label htmlFor="cep">
+        //                                                 Digite o CEP, do local do evento
+        //                                             </label>
+        //                                             {errors.cep && (
+        //                                                 <small>
+        //                                                     Preencha o CEP, para a gente
+        //                                                     buscar o endereço :)
+        //                                                 </small>
+        //                                             )}
+        //                                         </div>
+
+  //                                         <div className="input-field col s6">
+  //                                             <i className="material-icons prefix">
+  //                                                 my_location
+  //                                             </i>
+  //                                             <input
+  //                                               id="rua"
+  //                                               name="rua"
+  //                                               placeholder="Rua"
+  //                                               type="text"
+  //                                               ref={register({
+  //                                                 required: true
+  //                                               })}
+  //                                               disabled
+  //                                               className="validate"
+  //                                               value={
+  //                                                     load
+  //                                                       ? endereco.logradouro
+  //                                                       : null
+  //                                                 }
+  //                                             />
+  //                                         </div>
+
+  //                                         <div className="input-field col s6">
+  //                                             <i className="material-icons prefix">
+  //                                                 pin_drop
+  //                                             </i>
+  //                                             <input
+  //                                               id="numero"
+  //                                               name="numero"
+  //                                               type="text"
+  //                                               className="validate"
+  //                                               ref={register({
+  //                                                 required: true
+  //                                               })}
+  //                                             />
+  //                                             <label htmlFor="numero">
+  //                                                 Numero
+  //                                             </label>
+  //                                             {errors.numero && (
+  //                                                 <small>
+  //                                                     Preenche o numero do local
+  //                                                     ae :) :)
+  //                                                 </small>
+  //                                             )}
+  //                                         </div>
+  //                                         <div className="input-field col s6">
+  //                                             <i className="material-icons prefix">
+  //                                                 location_city
+  //                                             </i>
+  //                                             <input
+  //                                               id="bairro"
+  //                                               type="text"
+  //                                               name="bairro"
+  //                                               disabled
+  //                                               className="validate"
+  //                                               placeholder="Bairro"
+  //                                               ref={register({
+  //                                                 required: true
+  //                                               })}
+  //                                               value={
+  //                                                     load
+  //                                                       ? endereco.bairro
+  //                                                       : null
+  //                                                 }
+  //                                             />
+  //                                         </div>
+  //                                     </div>
+  //                                     <div style={{ display: "none" }}>
+  //                                         <input
+  //                                           id="latitude"
+  //                                           name="latitude"
+  //                                           ref={register({
+  //                                             required: true
+  //                                           })}
+  //                                           value={
+  //                                                 temCoord
+  //                                                   ? coordenada.results[0]
+  //                                                     .geometry.location.lat
+  //                                                   : null
+  //                                             }
+  //                                         />
+  //                                         <input
+  //                                           id="longitude"
+  //                                           name="longitude"
+  //                                           ref={register({
+  //                                             required: true
+  //                                           })}
+  //                                           value={
+  //                                                 temCoord
+  //                                                   ? coordenada.results[0]
+  //                                                     .geometry.location.lng
+  //                                                   : null
+  //                                             }
+  //                                         />
+  //                                         <input
+  //                                           id="usuario"
+  //                                           name="usuario"
+  //                                           ref={register({
+  //                                             required: true
+  //                                           })}
+  //                                           value={
+  //                                                 load
+  //                                                   ? localStorage.getItem(
+  //                                                     "apelido"
+  //                                                   )
+  //                                                   : null
+  //                                             }
+  //                                         />
+  //                                     </div>
+  //                                     <div className="row">
+  //                                         <div className="input-field col s12">
+  //                                             <button
+  //                                               disabled={
+  //                                                     errors.apelido
+  //                                                     || errors.senha
+  //                                                 }
+  //                                               type="submit"
+  //                                               name="btn_login"
+  //                                               className="col s12 btn btn-large waves-effect indigo"
+  //                                             >
+  //                                                 Cadastrar Evento
+  //                                             </button>
+  //                                         </div>
+  //                                         <div className="row">
+  //                                             <div className="input-field col s6 m6 l6">
+  //                                                 {error && (
+  //                                                     <p className="margin medium-small">
+  //                                                         {error}
+  //                                                     </p>
+  //                                                 )}
+  //                                             </div>
+  //                                         </div>
+  //                                     </div>
+  //                                 </form>
+  //                             </div>
+  //                         </div>
+  //                     </Card>
+  //                 </Container>
+  //             </Modal>
+  //             <div className="row">
+  //                 <div className="header-home">
+  //                     <h1 className="titulo-home">O que voce quer fazer ?</h1>
+  //                     <div className="input-field col s12">
+  //                         <input
+  //                           onChange={handleInputChange}
+  //                           type="text"
+  //                           id="autocomplete-input"
+  //                           className="input-home autocomplete search-box validate white search-circle"
+  //                           placeholder="Pesquise eventos, roles, lugares, shows, Bora !"
+  //                         />
+  //                         <i className="material-icons prefix">search</i>
+  //                     </div>
+  //                     <div className="section-botoes section scrollspy">
+  //                         {isAuthenticated() ? (
+  //                             <a
+  //                               style={{ backgroundColor: "#721734" }}
+  //                               onClick={handleOpen}
+  //                               className="col s6 button-bora waves-effect waves-light btn-large"
+  //                             >
+  //                                 <i className="material-icons left">share</i>
+  //                                 Criar Role
+  //                             </a>
+  //                         ) : (
+  //                             <a
+  //                               style={{ backgroundColor: "#721734" }}
+  //                               onClick={handleOpenNotAutenticado}
+  //                               className="col s6 button-bora waves-effect waves-light btn-large"
+  //                             >
+  //                                 <i className="material-icons left">share</i>
+  //                                 Criar Role
+  //                             </a>
+  //                         )}
+
+  //                         <a className="col s5 button-bora waves-effect waves-light purple darken-4 btn-large">
+  //                             <i className="material-icons left">sentiment_very_satisfied</i>
+  //                             Bora
+  //                         </a>
+  //                     </div>
+  //                 </div>
+  //             <div style={{ backgroundColor: "#2b0125", with: "100%", height: "70px" }} />
+  //             </div>
+  //             <div className="row">
+  //                 <Container>
+  //                     {loadEventos ? (
+  //                         <Eventos dados={results} />
+  //                     ) : loadAllEventos ? (
+  //                       allEventos.slice(0, 8).map((res) => (
+  //                             <div className="col s4">
+  //                                 <span key={res.idEvento}>
+  //                                     {console.log(res)}
+  //                                     <div className="card">
+  //                                         <div className="card-image">
+  //                                             <img
+  //                                               style={{
+  //                                                 backgroundSize: "cover"
+  //                                               }}
+  //                                               src={bg}
+  //                                             />
+  //                                             <span className="truncate card-title">
+  //                                                 <p className="color-titulo-home">
+  //                                                     {res.titulo}
+  //                                                 </p>
+  //                                             </span>
+  //                                         </div>
+  //                                         <div className="card-content">
+  //                                             <p>{res.descricao}</p>
+  //                                         </div>
+  //                                         <div className="card-action">
+  //                                             <NavLink
+  //                                               to={`/perfil/eventos/${res.idEvento}`}
+  //                                             >
+  //                                                 Detalhes
+  //                                             </NavLink>
+  //                                         </div>
+  //                                     </div>
+  //                                 </span>
+  //                             </div>
+  //                       ))
+  //                     ) : null}
+  //                 </Container>
+  //             </div>
+  //         </main>
   );
 };
