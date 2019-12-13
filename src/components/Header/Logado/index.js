@@ -3,7 +3,7 @@ import {
   Navbar, NavItem, Dropdown, Button, Card
 } from "react-materialize";
 import { NavLink } from "react-router-dom";
-import "../../../styles/navbar.css";
+import "../../../styles/Header/navbar.css";
 import { Avatar } from "@material-ui/core";
 import Container from "react-materialize/lib/Container";
 import { api } from "../../../services";
