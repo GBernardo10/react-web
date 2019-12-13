@@ -5,7 +5,7 @@ export const NavBar = styled.header`
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        background-color: #2f004b;
+        background-color: #121212;
         min-height: 8vh;
     }
     li {
