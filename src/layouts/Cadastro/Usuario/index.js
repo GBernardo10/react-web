@@ -5,28 +5,98 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState } from "react";
 import useForm from "react-hook-form";
-import { Card, Container } from "react-materialize";
-import { NavLink, Redirect } from "react-router-dom";
+import { Button, Form, Grid, Header, Image, Message, Segment, Checkbox } from 'semantic-ui-react'
+import { NavLink, Redirect, Link } from "react-router-dom";
 import { api } from "../../../services";
 
 export default () => {
-  const { register, handleSubmit, errors } = useForm();
-  const [valido, setValido] = useState(false);
-  const [error, setError] = useState("");
+    const { register, handleSubmit, errors } = useForm();
+    const [valido, setValido] = useState(false);
+    const [error, setError] = useState("");
 
-  const onSubmit = (data) => {
-    api.post("usuarios", data)
-      .then((respo) => {
-        if (respo.status === 201) {
-          setValido(true);
-        }
-      })
-      .catch((err) => setError(
-        "Apelido e/ou email ja existentes, tente outra combição :)"
-      ));
-  };
-  return (
-        <Container>
+    const onSubmit = (data) => {
+        api.post("/usuarios", data)
+            .then((respo) => {
+                if (respo.status === 201) {
+                    setValido(true);
+                }
+            })
+            .catch((err) => setError(
+                "Apelido e/ou email ja existentes, tente outra combição :)"
+            ));
+    };
+    return (
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+            {valido ? <Redirect to="/" /> : null}
+            <Grid.Column style={{ maxWidth: 450 }}>
+                <Header as='h2' color='purple' textAlign='center'>
+                    Bem vindo, crie uma conta
+                </Header>
+                <Form size='large' onSubmit={handleSubmit(onSubmit)}>
+                    <Segment stacked>
+                        <Form.Input
+                            fluid
+                            icon='user'
+                            iconPosition='left'
+                            placeholder='Digite seu apelido'
+                            type="apelido"
+                            name="apelido"
+                            id="apelido"
+                            required
+                        />
+                        {errors.apelido && (
+                            <small>
+                                {errors.apelido.message}
+                            </small>
+                        )}
+                        <Form.Input
+                            fluid
+                            icon='mail'
+                            iconPosition='left'
+                            placeholder='Digite seu email'
+                            type="email"
+                            name="email"
+                            id="email"
+                            required
+                        />
+                        {errors.email && (
+                            <small>
+                                {errors.email.message}
+                            </small>
+                        )}
+                        <Form.Input
+                            fluid
+                            icon='lock'
+                            iconPosition='left'
+                            placeholder='Digite sua senha'
+                            type="password"
+                            name="senha"
+                            maxLength="15"
+                            id="senha"
+                            required
+                        />
+                        {errors.senha && (
+                            <small>
+                                {errors.senha.message}
+                            </small>
+                        )}
+
+                        <Button color='purple' 
+                        fluid size='large'
+                        type="submit"
+                        >
+                            Cadastrar
+                        </Button>
+                    </Segment>
+                </Form>
+                <Message color="black">
+                    <Link to="/login">Já tem uma conta? Clique aqui</Link>
+                </Message>
+            </Grid.Column>
+        </Grid>
+
+
+        /* <Container>
             <div className="container">
                 {valido ? <Redirect to="/" /> : null}
                 <Card>
@@ -193,8 +263,8 @@ export default () => {
                     occaecat cupidatat non proident, sunt in culpa qui officia
                     deserunt mollit anim id est laborum
                 </p>
-            </Modal> */}
+            </Modal>
             </div>
-        </Container>
-  );
+        </Container> */
+    );
 };
