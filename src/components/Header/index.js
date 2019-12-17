@@ -26,7 +26,7 @@ export const Header = () => (
         <nav>
             <div className="logo">
                 <NavLink to="/">
-                    <h4>BORA</h4>
+                    <h4>Bora</h4>
                 </NavLink>
             </div>
             <ul className="nav-links">

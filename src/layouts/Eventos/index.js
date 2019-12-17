@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 /* eslint-disable no-useless-catch */
@@ -11,9 +12,12 @@ import { Today } from "@material-ui/icons";
 
 import bg from "../../assets/flat-geometric-shapes-background/bg-detalheEventos.png";
 import imgUser from "../../assets/flat-geometric-shapes-background/user.png";
+import description from "../../assets/img/undraw_zoom_in_1txs.svg";
+import calendar from "../../assets/img/undraw_calendar_dutt.svg";
 import { api } from "../../services";
 import "../../styles/perfil/perfil.css";
 import { Container } from "react-materialize";
+import { Icon } from "semantic-ui-react";
 
 export default (props) => {
   const url = useRouteMatch().params;
@@ -25,6 +29,7 @@ export default (props) => {
     longitude: ""
   });
   const [load, setLoad] = useState(false);
+  const [posicao, setPosicao] = useState(false);
   const [loading, setLoading] = useState(false);
   const dados = [
     { lat: 47.49855629475769, lng: -122.14184416996333, id: 1 },
@@ -73,7 +78,6 @@ export default (props) => {
 
   const geoLocation = window.navigator.geolocation.getCurrentPosition(
     (positon) => {
-      // setLoad(false);
       setGeo({
         ...geo,
         latitude: positon.coords.latitude,
@@ -83,9 +87,158 @@ export default (props) => {
     }
   );
 
+  useEffect(() => {
+    setInterval(() => {
+      if (geo) setPosicao(true);
+    }, 1000);
+    clearInterval();
+  });
+
   return (
     <>
-            <Container>
+            <div className="ui container">
+                <div className="ui breadcrumb">
+                    <a className="section">Home</a>
+                    <div className="divider">/</div>
+                    <a className="section">Perfil</a>
+                    <div className="divider">/</div>
+                    <a className="section">Eventos</a>
+                    <div className="divider">/</div>
+                    <a className="active section">Detalhe</a>
+                </div>
+                <div className="ui horizontal divider" />
+                <div className="ui main text container">
+                    <h1 style={{ color: "white" }} className="ui header">
+                        Detalhe do evento
+                    </h1>
+                </div>
+                <div className="ui horizontal divider" />
+                <div className="ui grid">
+                    <div className="column">
+                        <div className="ui segment">
+                            <img className="ui fluid image" src={bg} />
+                            <div className="ui grid">
+                                <div className="four wide column">
+                                    <h1 className="ui header">
+                                        Nome do evento
+                                    </h1>
+                                </div>
+                                <div className="five wide column">
+                                    <h1 className="ui header">Organizador:</h1>
+                                </div>
+                                <div className="five wide column">
+                                    <button
+                                      style={{ width: "30%" }}
+                                      className="positive ui right floated button"
+                                    >
+                                        <Icon name="thumbs up outline" />
+                                        Participar
+                                    </button>
+                                    <button
+                                      style={{ width: "30%" }}
+                                      className="positive ui right floated button"
+                                    >
+                                        <Icon name="edit outline icon" />
+                                        Editar
+                                    </button>
+                                </div>
+
+                                <div className="four wide column">
+                                    <p>Nome do evento</p>
+                                </div>
+                                <div className="four wide column">
+                                    <p>Organizador</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="ui horizontal divider" />
+                <div className="ui two column centered grid">
+                    <div className="six wide column">
+                        <div className="ui segment">
+                            <div className="ui items">
+                                <div className="item">
+                                    <div className="image">
+                                        <img src={description} />
+                                    </div>
+                                    <div className="content">
+                                        <a className="header">Descrição</a>
+                                        <div className="description">
+                                            <p>Sem descrição</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="six wide column">
+                        <div className="ui segment">
+                            <div className="ui items">
+                                <div className="item">
+                                    <div className="image">
+                                        <img src={calendar} />
+                                    </div>
+                                    <div className="content">
+                                        <a className="header">
+                                            Informações Uteis
+                                        </a>
+                                        <div className="description">
+                                            <div className="middle aligned content">
+                                                <div className="header">
+                                                    <Icon name="clock outline" />
+                                                    Horario:hh:MM às hh:MM
+                                                </div>
+                                                <div className="header">
+                                                    <Icon name="calendar alternate outline icon" />
+                                                    Dia:
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="ui one column centered grid">
+                    <div className="ui segment">
+                        <div
+                          style={{ width: "80vw", height: "50vh" }}
+                          className="ui fluid card"
+                        >
+                            {posicao ? (
+                                <Map
+                                  google={google}
+                                  zoom={12}
+                                  initialCenter={{
+                                    lat: geo.latitude,
+                                    lng: geo.longitude
+                                    // lat: -23.5649413,
+                                    // lng: -46.4773048
+                                  }}
+                                >
+                                    {console.log(geo)}
+                                    <Marker
+                                      position={{
+                                        lat: geo.latitude,
+                                        lng: geo.longitude
+                                      }}
+                                    />
+                                </Map>
+                            ) : null}
+                        </div>
+                        <div className="description">
+                            <div className="header">
+                                <Icon name="map marker alternate" />
+                                Local:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <Container>
                 <div className="container" />
                 <div id="profile-page" className="section">
                     <div id="profile-page-header" className="card">
@@ -205,17 +358,13 @@ export default (props) => {
                                           disableDefaultUI
                                           google={google}
                                           zoom={12}
-                                            //   style={mapStyles}
+                                          style={mapStyles}
                                           initialCenter={{
                                             lat: geo.latitude,
                                             lng: geo.longitude
                                           }}
                                         >
-                                            {/* <CustomMarker
-
-                                            >
-
-                                            </CustomMarker> */}
+                                            <CustomMarker />
                                             <Marker
                                               position={{
                                                 lat: geo.latitude,
@@ -223,7 +372,7 @@ export default (props) => {
                                               }}
                                             />
 
-                                            {/* {dados.map((value) => (
+                                            {dados.map((value) => (
                                                 <Marker
                                                   name="ds"
                                                   key={value.id}
@@ -233,24 +382,24 @@ export default (props) => {
                                                       lng: value.lng
                                                     }}
                                                 />
-                                            ))} */}
-                                            {/* {console.log()} */}
+                                            ))}
+                                            {console.log()}
                                             <InfoWindow
-                                                // marker={this.state.activeMarker}
+                                                marker={this.state.activeMarker}
                                               visible={showingInfoWindow}
-                                                //   onClose={this.onClose}
+                                                   onClose={this.onClose}
                                             >
                                                 <div>
                                                     <h4>teste</h4>
                                                 </div>
                                             </InfoWindow>
 
-                                            {/* <Marker
+                                            <Marker
                                         position={{
                                             lat: value[0].geometry.location.lat,
                                             lng: value[0].geometry.location.lng
                                         }}
-                                    /> */}
+                                    />
                                         </Map>
                                     ) : null}
                                 </div>
@@ -270,7 +419,7 @@ export default (props) => {
                         </div>
                     </div>
                 </div>
-            </Container>
+            </Container> */}
     </>
   );
 };

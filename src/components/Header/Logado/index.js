@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from "react";
-import {
-  Navbar, NavItem, Dropdown, Button, Card
-} from "react-materialize";
 import { NavLink } from "react-router-dom";
 import "../../../styles/Header/navbar.css";
 import { Avatar } from "@material-ui/core";
 import Container from "react-materialize/lib/Container";
+import { NavBar } from "../../../styles/Header/styles";
 import { api } from "../../../services";
 import userPic from "../../../assets/flat-geometric-shapes-background/user.png";
+
+const toggleMenu = () => {
+  const burger = document.querySelector(".burger");
+  const nav = document.querySelector(".nav-links");
+  const navLinks = document.querySelectorAll(".nav-links li");
+
+  nav.classList.toggle("nav-active");
+  burger.classList.toggle("toggle");
+
+  navLinks.forEach((link, index) => {
+    if (link.style.animation) {
+      link.style.animation = "";
+    } else {
+      link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7
+                + 0.25}s `;
+    }
+  });
+};
 
 export default () => {
   const [usuario, setUsuario] = useState({});
@@ -26,7 +42,7 @@ export default () => {
       const apelido = localStorage.getItem("apelido");
       setLoading(true);
       await api
-        .get(`usuarios/apelido/${apelido}`)
+        .get(`auth/v1/api/usuarios/apelido/${apelido}`)
         .then((res) => {
           setUsuario(res.data);
           setLoad(true);
@@ -42,7 +58,42 @@ export default () => {
 
   return (
     <>
-            <Navbar className="nav-color">
+            <NavBar>
+                <nav>
+                    <div className="logo">
+                        <NavLink to="/">
+                            <h4>Bora</h4>
+                        </NavLink>
+                    </div>
+                    <ul className="nav-links">
+                        <li>
+                            <NavLink
+                              className="cadastro"
+                              activeClassName="active"
+                              to="/login"
+                            >
+                                <NavLink to={`/perfil/${id}`}>
+                                    <img
+                                      className="ui avatar image"
+                                      src={userPic}
+                                    />
+                                </NavLink>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/" onClick={handleClick}>
+                                Sair
+                            </NavLink>
+                        </li>
+                    </ul>
+                    <div onClick={() => toggleMenu()} className="burger">
+                        <div className="line1" />
+                        <div className="line2" />
+                        <div className="line3" />
+                    </div>
+                </nav>
+            </NavBar>
+            {/* <Navbar className="nav-color">
                 <NavLink className="brand-logo center" to="/">
                     BORA
                 </NavLink>
@@ -72,7 +123,7 @@ export default () => {
                 ) : (
                     <p>loading</p>
                 )}
-            </Navbar>
+            </Navbar> */}
     </>
   );
 };
