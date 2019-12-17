@@ -16,7 +16,9 @@ export const NavBar = styled.header`
         color: white;
     }
     .logo h4 {
-        font-size: 2.5rem;
+        font-size: 3rem;
+        font-family: "Lobster", cursive;
+        color:white
     }
     .nav-links {
         display: flex;
