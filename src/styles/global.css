@@ -8,6 +8,7 @@
     font-size: 100%;
     box-sizing: border-box;
     border: none;
+    text-decoration: none
 }
 
 body {
@@ -58,4 +59,3 @@ img {
     justify-content: center;
     margin: 18%;
 }
-

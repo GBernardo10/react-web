@@ -8,21 +8,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/order */
 import axios from "axios";
-import {
-  Button, Header, Image, Modal, Icon, Divider
-} from "semantic-ui-react";
 // import { Modal, makeStyles } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { Carousel } from "../../components/Carousel";
-import "../../styles/Home/home.css";
-import { NavLink, Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import useForm from "react-hook-form";
 import Card from "react-materialize/lib/Card";
 import Container from "react-materialize/lib/Container";
-import { isAuthenticated } from "../../services/auth";
-import { api } from "../../services";
-import { Eventos } from "../../components/ListEventos";
+import { NavLink } from "react-router-dom";
+import { Divider, Icon, Modal } from "semantic-ui-react";
 import bg from "../../assets/flat-geometric-shapes-background/bg-detalheEventos.png";
+import bg2 from "../../assets/img/undraw_observations_mejb.svg";
+import { Eventos } from "../../components/ListEventos";
+import { api } from "../../services";
+import { isAuthenticated } from "../../services/auth";
+import "../../styles/Home/home.css";
 
 export default () => {
   const { register, handleSubmit, errors } = useForm();
@@ -37,10 +35,215 @@ export default () => {
   const [loadEventos, setLoadEventos] = useState(false);
   const [allEventos, setAllEventos] = useState([]);
   const [loadAllEventos, setLoadAllEventos] = useState(false);
+  const [inputs, setInputs] = useState("");
+  const dados = [
+    {
+      idEvento: 10,
+      titulo: "beach bar",
+      dataInicio: "10/10/2019",
+      dataFim: "20/12/2019",
+      horaInicio: "12:00",
+      horaFim: "22:00",
+      descricao: "beber ate cair",
+      rua: "Alameda Santos",
+      numero: "2456",
+      cep: "01419-002",
+      bairro: "Jardim Paulista",
+      latitude: -23.5572013,
+      longitude: 46.6631637
+    },
+    {
+      idEvento: 11,
+      titulo: "Beach beer",
+      dataInicio: "19/12/2019",
+      dataFim: "18/12/2019",
+      horaInicio: "02:00",
+      horaFim: "22:00",
+      descricao: "curtir um rolê",
+      rua: "Alameda Santos",
+      numero: "2456",
+      cep: "01419-002",
+      bairro: "Jardim Paulista",
+      latitude: -23.5572013,
+      longitude: 46.6631637
+    },
+    {
+      idEvento: 17,
+      titulo: "Bella jaú",
+      dataInicio: "10/10/19",
+      dataFim: "20/12/19",
+      horaInicio: "03:00",
+      horaFim: "22:00",
+      descricao: "Bora tomar umas",
+      rua: "Alameda Jaú",
+      numero: "2027",
+      cep: "01420-002",
+      bairro: "Jardim Paulista",
+      latitude: -23.5568372,
+      longitude: -46.665511
+    },
+    {
+      idEvento: 28,
+      titulo: "casa",
+      rua: "Rua Valença do Minho",
+      numero: "159",
+      cep: "03583040",
+      bairro: "Jardim Brasília (Zona Leste)",
+      latitude: -23.5582989,
+      longitude: -46.4955618
+    },
+    {
+      idEvento: 16,
+      titulo: "Espaço Augusta",
+      dataInicio: "10/10/19",
+      dataFim: "20/12/19",
+      horaInicio: "03:00",
+      horaFim: "22:00",
+      descricao: "Bora tomar umas",
+      rua: "Rua Augusta",
+      numero: "2040",
+      cep: "01413-100",
+      bairro: "Cerqueira César",
+      latitude: -23.5627644,
+      longitude: -46.6652983
+    },
+    {
+      idEvento: 18,
+      titulo: "Kart no shopping morumbi",
+      rua: "Rua Voluntários da Pátria",
+      numero: "100",
+      cep: "02010000",
+      bairro: "Santana",
+      latitude: -23.5122048,
+      longitude: -46.3591305
+    },
+    {
+      idEvento: 9,
+      titulo: "McDonalds",
+      dataInicio: "10/10/2019",
+      dataFim: "20/12/2019",
+      horaInicio: "12:00",
+      horaFim: "22:00",
+      descricao: "se reunir no mac donalds",
+      rua: "Av. Paulista",
+      numero: "2034",
+      cep: "01310-300",
+      bairro: "Bela Vista",
+      latitude: -23.5585806,
+      longitude: -46.6593165
+    },
+    {
+      idEvento: 8,
+      titulo: "masp",
+      dataInicio: "10/10/2019",
+      dataFim: "20/12/2019",
+      horaInicio: "12:00",
+      horaFim: "22:00",
+      descricao: "encontro no masp como nos velhos tempo",
+      rua: "Av. Paulista, 1578",
+      numero: "1578",
+      cep: "01310-200",
+      bairro: "Bela Vista",
+      latitude: -23.56108,
+      longitude: -46.655961
+    },
+    {
+      idEvento: 19,
+      titulo: "nove",
+      rua: "rua dois",
+      numero: "159",
+      bairro: "jardim"
+    },
+    {
+      idEvento: 20,
+      titulo: "nove",
+      rua: "rua dois",
+      numero: "159",
+      bairro: "jardim"
+    },
+    {
+      idEvento: 21,
+      titulo: "noveeee",
+      rua: "rua dois",
+      numero: "159",
+      bairro: "jardim"
+    },
+    {
+      idEvento: 22,
+      titulo: "noveeee",
+      rua: "rua dois",
+      numero: "159",
+      bairro: "jardim"
+    },
+    {
+      idEvento: 23,
+      titulo: "noveeee",
+      rua: "rua dois",
+      numero: "159",
+      bairro: "jardim"
+    },
+    {
+      idEvento: 24,
+      titulo: "que",
+      rua: "rua dois",
+      numero: "159"
+    },
+    {
+      idEvento: 25,
+      titulo: "que",
+      rua: "rua dois",
+      numero: "159"
+    },
+    {
+      idEvento: 26,
+      titulo: "que",
+      rua: "rua dois",
+      numero: "159"
+    },
+    {
+      idEvento: 27,
+      titulo: "que",
+      rua: "rua dois",
+      numero: "159"
+    },
+    {
+      idEvento: 15,
+      titulo: "Starbucks",
+      dataInicio: "10/10/19",
+      dataFim: "20/12/19",
+      horaInicio: "19:00",
+      horaFim: "22:00",
+      descricao: "Bora tomar um café",
+      rua: "Rua Haddock Lobo",
+      numero: "608",
+      cep: "01414-002",
+      bairro: "Cerqueira César",
+      latitude: -23.5658224,
+      longitude: -46.6699399
+    }
+  ];
 
+  const verifica = () => {
+    console.log(results);
+    if (results.length > 0) {
+      setLoadEventos(true);
+    }
+  };
+
+  const pesquisar = () => {
+    api.get(`pesquisa/v1/api/eventos/pesquisa/${inputs}`)
+      .then((res) => {
+        setResults(res.data);
+        console.log(`${res.data}o que ta acontecedo`);
+      })
+      .catch((err) => console.error(err));
+    verifica();
+  };
+
+  console.log(`${results}resultado`);
   useEffect(() => {
     const carregaEventos = () => {
-      api.get("eventos").then((res) => {
+      api.get("eventos/v1/api/eventos").then((res) => {
         setAllEventos(res.data);
         setLoadAllEventos(true);
       });
@@ -52,19 +255,12 @@ export default () => {
 
   //   const API_URL = "https://api.themoviedb.org/3/search/movie?query=${val}&api_key=dbc0a6d62448554c27b6167ef7dabb1b";
 
+  //   const handleInputChange = (e) => {
+  //     setInputs(e.target.value);
+  //   };
+
   const handleInputChange = (e) => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?query=${e.target.value}&api_key=dbc0a6d62448554c27b6167ef7dabb1b`
-      )
-      .then((res) => {
-        setResults(res.data);
-        setLoadEventos(true);
-      })
-      .catch((err) => {
-        setLoadEventos(false);
-      });
-    // .then(res=>setResults(res.data))
+    setInputs(e.target.value);
   };
 
   const handleOpen = () => {
@@ -77,12 +273,14 @@ export default () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    api.post("eventos", data).then((res) => {
+    api.post("eventos/v1/api/eventos", data).then((res) => {
       if (res.status === 201) {
         handleClose();
         alert("Evento criado com sucesso");
       } else {
-        alert("erro");
+        alert(
+          "Não foi possivel criar o evento, tente novamente mais tarde !"
+        );
       }
     });
   };
@@ -115,12 +313,7 @@ export default () => {
   };
   return (
         <main>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={usuarioNaoLogado}
-              onClose={handleCloseNotAutenticado}
-            >
+            <Modal open={usuarioNaoLogado} onClose={handleCloseNotAutenticado}>
                 <Container>
                     <Card
                       style={{
@@ -137,7 +330,6 @@ export default () => {
                         </i>
                         <h4 className="center-align">
                             Para criar eventos, voce deve estar logado
-{" "}
                         </h4>
                         <div className="row">
                             <div className="col s12">
@@ -606,6 +798,7 @@ export default () => {
                         <div className="ui search">
                             <div className="ui massive icon input">
                                 <input
+                                  onChange={handleInputChange}
                                   style={{ width: "100%" }}
                                   className="input-home"
                                   type="text"
@@ -662,6 +855,7 @@ export default () => {
                             </button>
                         )}
                         <button
+                          onClick={pesquisar}
                           style={{ width: "30%" }}
                           className="ui violet button"
                         >
@@ -679,51 +873,44 @@ export default () => {
                 </div>
                 <div
                   style={{
-                    backgroundColor: "#2b0125",
-                    with: "100%",
-                    height: "70px"
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    width: "60%",
+                    marginLeft: "20%"
                   }}
-                />
-            </div>
-            <div className="row">
-                <Container>
+                  className="ui three column grid"
+                >
                     {loadEventos ? (
                         <Eventos dados={results} />
                     ) : loadAllEventos ? (
                       allEventos.slice(0, 8).map((res) => (
-                            <div className="col s4">
+                            <div style={{ margin: "14%" }} className="col s4">
                                 <span key={res.idEvento}>
                                     {console.log(res)}
-                                    <div className="card">
-                                        <div className="card-image">
-                                            <img
-                                              style={{
-                                                backgroundSize: "cover"
-                                              }}
-                                              src={bg}
-                                            />
-                                            <span className="truncate card-title">
-                                                <p className="color-titulo-home">
-                                                    {res.titulo}
-                                                </p>
-                                            </span>
-                                        </div>
-                                        <div className="card-content">
-                                            <p>{res.descricao}</p>
-                                        </div>
-                                        <div className="card-action">
-                                            <NavLink
-                                              to={`/perfil/eventos/${res.idEvento}`}
-                                            >
-                                                Detalhes
-                                            </NavLink>
+                                    <div className="">
+                                        <div className="column">
+                                            <div className="ui fluid card">
+                                                <NavLink
+                                                  to={`/perfil/eventos/${res.idEvento}`}
+                                                >
+                                                    <div className="image">
+                                                        <img src={bg2} />
+                                                    </div>
+                                                </NavLink>
+                                                <div className="content">
+                                                    <a className="header">
+                                                        {res.titulo}
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </span>
                             </div>
                       ))
                     ) : null}
-                </Container>
+                </div>
             </div>
         </main>
   );

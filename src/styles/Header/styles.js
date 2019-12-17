@@ -18,7 +18,8 @@ export const NavBar = styled.header`
     .logo h4 {
         font-size: 3rem;
         font-family: "Lobster", cursive;
-        color:white
+        color:white;
+        font-weight:100
     }
     .nav-links {
         display: flex;

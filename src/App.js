@@ -36,27 +36,27 @@ function App() {
     });
   }, 1000);
 
-  function ativarButton() {
-    const ativo = document.querySelector(".back-to-top");
-    if (window.pageYOffset > 300) {
-      ativo.classList.add("active");
-    }
-    if (window.pageYOffset == 0) {
-      ativo.classList.remove("active");
-    }
-  }
+  //   function ativarButton() {
+  //     const ativo = document.querySelector(".back-to-top");
+  //     if (window.pageYOffset > 300) {
+  //       ativo.classList.add("active");
+  //     }
+  //     if (window.pageYOffset == 0) {
+  //       ativo.classList.remove("active");
+  //     }
+  //   }
 
-  const backToTop = () => window.scrollTo(0, 0);
+  //   const backToTop = () => window.scrollTo(0, 0);
 
-  window.addEventListener("scroll", ativarButton);
+  //   window.addEventListener("scroll", ativarButton);
 
   return (
     <>
             {autenticado ? <HeaderLogado /> : <Header />}
             <Rotas />
-            <a onClick={backToTop} className="back-to-top" id="scroll-to-top">
+            {/* <a onClick={backToTop} className="back-to-top" id="scroll-to-top">
                 <i className="icon-top material-icons prefix">keyboard_arrow_up</i>
-            </a>
+            </a> */}
     </>
   );
 }

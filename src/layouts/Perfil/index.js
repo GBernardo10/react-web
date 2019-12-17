@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import { Carousel } from "../../components/Carousel";
 import imgUser from "../../assets/flat-geometric-shapes-background/user.png";
+import imgUser2 from "../../assets/img/undraw_listening_m5de.svg";
+import imgUser3 from "../../assets/img/undraw_hacker_mindset_gjwq.svg";
 import { api } from "../../services";
 import "../../styles/perfil/perfil.css";
 import Container from "react-materialize/lib/Container";
@@ -18,35 +20,27 @@ import { Icon } from "semantic-ui-react";
 
 export default () => {
   const [usuario, setUsuario] = useState({});
+  console.log(usuario);
   const [loading, setLoading] = useState(false);
   const [load, setLoad] = useState(false);
-  const [eventosOrganizados, setEventosOrganizados] = useState([
-    {
-      idEvento: "1",
-      titulo: "teste"
-    },
-    {
-      idEvento: "2",
-      titulo: "teste2"
-    },
-    {
-      idEvento: "3",
-      titulo: "teste"
-    }
-  ]);
-  console.log(`usuario ${usuario}`);
-  console.log(`eventos ${eventosOrganizados}`);
+  const [eventosOrganizados, setEventosOrganizados] = useState([]);
   const quantidadeEventosOrganizado = [];
   let contador = 0;
   console.log(usuario);
 
   const url = useRouteMatch().params;
 
+  console.log(`${eventosOrganizados}dsdsds`);
+
   useEffect(() => {
     const buscaUsuario = async () => {
       setLoading(true);
       await api
-        .get(`usuarios/apelido/${localStorage.getItem("apelido")}`)
+        .get(
+          `auth/v1/api/usuarios/apelido/${localStorage.getItem(
+            "apelido"
+          )}`
+        )
         .then((res) => {
           setUsuario(res.data);
           setEventosOrganizados(res.data.eventosOrganizados);
@@ -74,9 +68,18 @@ export default () => {
     <>
             <div className="ui container">
                 <div className="ui breadcrumb">
-                    <a className="section">Home</a>
-                    <div className="divider">/</div>
-                    <a className="active section">Perfil</a>
+                    <NavLink to="/">
+                        <a style={{ color: "white" }} className="">
+                            Home
+                        </a>
+                    </NavLink>
+                    <div className="divider"> / </div>
+                    <div
+                        style={{ color: "#6435c9" }}
+                        className="active section"
+                    >
+                        Perfil
+                    </div>
                 </div>
                 <div className="ui horizontal divider" />
                 <div className="ui main text container">
@@ -99,9 +102,9 @@ export default () => {
                                                 Meus Eventos
                                             </p>
                                             <div className="description">
-                                                {!load ? (
+                                                {load ? (
                                                     <Carousel>
-                                                        {!load
+                                                        {load
                                                           ? eventosOrganizados.map(
                                                             (d, i) => (
                                                                       <div
@@ -113,32 +116,20 @@ export default () => {
                                                                           <div className="image">
                                                                               <img
                                                                                   src={
-                                                                                      imgUser
+                                                                                      imgUser3
                                                                                   }
                                                                               />
                                                                           </div>
                                                                           <div className="content">
                                                                               <a className="header">
-                                                                                  Kristy
+                                                                                  {
+                                                                                      d.titulo
+                                                                                  }
                                                                               </a>
                                                                               <div className="meta">
-                                                                                  <span className="date">
-                                                                                      Joined
-                                                                                      in
-                                                                                      2013
-                                                                                  </span>
+                                                                                  <span className="date" />
                                                                               </div>
-                                                                              <div className="description">
-                                                                                  Kristy
-                                                                                  is
-                                                                                  an
-                                                                                  art
-                                                                                  director
-                                                                                  living
-                                                                                  in
-                                                                                  New
-                                                                                  York.
-                                                                              </div>
+                                                                              <div className="description" />
                                                                           </div>
                                                                           <div className="extra content">
                                                                               <a>
@@ -177,10 +168,10 @@ export default () => {
                                         </span>
                                         <div className="content">
                                             <p className="header">
-                                                Guilherme Jesus
+                                                {usuario.apelido}
                                             </p>
                                             <div className="description">
-                                                <p>dsds</p>
+                                                <p>Coloque aqui uma descrição</p>
                                             </div>
                                             <div className="extra">
                                                 <div className="ui label">
@@ -214,38 +205,27 @@ export default () => {
                                                                       key={i}
                                                                       className="ui card"
                                                                   >
-                                                                      <div className="image">
-                                                                          <img src="/images/avatar2/large/kristy.png" />
-                                                                      </div>
+                                                                      <div className="image" />
                                                                       <div className="content">
-                                                                          <a className="header">
-                                                                              Kristy
-                                                                          </a>
+                                                                          <span className="ui tiny image">
+                                                                              <img
+                                                                                  src={
+                                                                                      imgUser2
+                                                                                  }
+                                                                              />
+                                                                          </span>
+                                                                          <a className="header" />
                                                                           <div className="meta">
-                                                                              <span className="date">
-                                                                                  Joined
-                                                                                  in
-                                                                                  2013
-                                                                              </span>
+                                                                              <span className="date" />
                                                                           </div>
-                                                                          <div className="description">
-                                                                              Kristy
-                                                                              is
-                                                                              an
-                                                                              art
-                                                                              director
-                                                                              living
-                                                                              in
-                                                                              New
-                                                                              York.
-                                                                          </div>
+                                                                          <div className="description" />
                                                                       </div>
                                                                       <div className="extra content">
-                                                                          <a>
-                                                                              <i className="user icon" />
-                                                                              22
-                                                                              Friends
-                                                                          </a>
+                                                                          <NavLink
+                                                                              to={`eventos/${d.idEvento}`}
+                                                                          >
+                                                                              Detalhe
+                                                                          </NavLink>
                                                                       </div>
                                                                   </div>
                                                         )

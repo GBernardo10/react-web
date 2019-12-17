@@ -54,11 +54,13 @@ export default (props) => {
     alert("ok");
   };
 
+  console.log(`titulo${eventos}`);
+
   useEffect(() => {
     const buscaEventos = async () => {
       setLoading(true);
       await api
-        .get(`eventos/${url.id}`)
+        .get(`eventos/v1/api/eventos/${url.id}`)
         .then((res) => {
           setEventos(res.data);
           setEnderecos("rua valenca do minho 159");
@@ -87,6 +89,7 @@ export default (props) => {
     }
   );
 
+
   useEffect(() => {
     setInterval(() => {
       if (geo) setPosicao(true);
@@ -98,13 +101,24 @@ export default (props) => {
     <>
             <div className="ui container">
                 <div className="ui breadcrumb">
-                    <a className="section">Home</a>
-                    <div className="divider">/</div>
-                    <a className="section">Perfil</a>
+                    <NavLink to="/">
+                        <a style={{ color: "white" }} className="">
+                            Home
+                        </a>
+                    </NavLink>
+                    <div className="divider"> / </div>
+                    <NavLink to="/">
+                        <a className="section">Perfil</a>
+                    </NavLink>
                     <div className="divider">/</div>
                     <a className="section">Eventos</a>
                     <div className="divider">/</div>
-                    <a className="active section">Detalhe</a>
+                    <div
+                      style={{ color: "#6435c9" }}
+                      className="active section"
+                    >
+                        Detalhe
+                    </div>
                 </div>
                 <div className="ui horizontal divider" />
                 <div className="ui main text container">
@@ -120,11 +134,11 @@ export default (props) => {
                             <div className="ui grid">
                                 <div className="four wide column">
                                     <h1 className="ui header">
-                                        Nome do evento
+                                        Nome do Evento
                                     </h1>
                                 </div>
                                 <div className="five wide column">
-                                    <h1 className="ui header">Organizador:</h1>
+                                    {/* <h1 className="ui header">Organizador:</h1> */}
                                 </div>
                                 <div className="five wide column">
                                     <button
@@ -144,10 +158,10 @@ export default (props) => {
                                 </div>
 
                                 <div className="four wide column">
-                                    <p>Nome do evento</p>
+                                    <p>{eventos.titulo}</p>
                                 </div>
                                 <div className="four wide column">
-                                    <p>Organizador</p>
+                                    {/* <p>Organizador</p> */}
                                 </div>
                             </div>
                         </div>
@@ -187,11 +201,11 @@ export default (props) => {
                                             <div className="middle aligned content">
                                                 <div className="header">
                                                     <Icon name="clock outline" />
-                                                    Horario:hh:MM às hh:MM
+                                                    Horario:{eventos.horaInicio} às {eventos.horaFim}
                                                 </div>
                                                 <div className="header">
                                                     <Icon name="calendar alternate outline icon" />
-                                                    Dia:
+                                                    Dia:{eventos.dataInicio} / {eventos.dataFim}
                                                 </div>
                                             </div>
                                         </div>
@@ -232,7 +246,7 @@ export default (props) => {
                         <div className="description">
                             <div className="header">
                                 <Icon name="map marker alternate" />
-                                Local:
+                                Local:{eventos.rua}
                             </div>
                         </div>
                     </div>
