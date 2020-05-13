@@ -1,0 +1,32 @@
+$bg-secondary: #e6e6e6;
+$bg: #3f3d56;
+$color-primary: #fefefe;
+$color-secondary: #f9a826;
+$color-alert: #ff5555;
+$color-text: #2f2e41;
+
+@mixin box-shadow($color) {
+  box-shadow: 2px 2px 4px -2px $color;
+}
+
+@mixin is-alert($bool) {
+  @if $bool == true {
+    color: $color-alert;
+  }
+}
+
+body {
+  background: $bg;
+}
+
+.container {
+  @include box-shadow(rgba($color-primary, 0.6));
+  width: 200px;
+  height: 200px;
+  background: $bg-secondary;
+
+  p {
+    color: $color-text;
+    @include is-alert(true);
+  }
+}
