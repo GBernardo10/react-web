@@ -1,7 +1,7 @@
-import HelloWorld from "../components/index";
+import Login from "../components/login";
 
 export default () => (
   <div className="app">
-    <HelloWorld />
+    <Login />
   </div>
 );
