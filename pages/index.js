@@ -1,7 +1,5 @@
-import Login from "../components/login";
-
 export default () => (
   <div className="app">
-    <Login />
+    <h1>ola mundo</h1>
   </div>
 );
