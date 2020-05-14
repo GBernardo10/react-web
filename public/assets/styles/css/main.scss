@@ -5,28 +5,26 @@ $color-secondary: #f9a826;
 $color-alert: #ff5555;
 $color-text: #2f2e41;
 
-@mixin box-shadow($color) {
-  box-shadow: 2px 2px 4px -2px $color;
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
-
-@mixin is-alert($bool) {
-  @if $bool == true {
-    color: $color-alert;
-  }
+html {
+  height: 100vh;
+  width: 100vw;
 }
-
 body {
+  height: 100%;
+  width: 100%;
   background: $bg;
 }
 
 .container {
-  @include box-shadow(rgba($color-primary, 0.6));
-  width: 200px;
-  height: 200px;
-  background: $bg-secondary;
-
-  p {
-    color: $color-text;
-    @include is-alert(true);
-  }
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 960px;
+  height: max-content;
 }

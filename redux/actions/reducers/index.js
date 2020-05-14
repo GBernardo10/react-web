@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import login from "../../../components/login";
+import { combineReducers } from 'redux';
+import login from '../../../components/login';
 
 export const reducer = combineReducers({
   login,

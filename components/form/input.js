@@ -1,10 +1,15 @@
+// @flow
 
-import {useEffect, useRef} from 'react';
-import {useField} from '@unform/core';
+import { useEffect, useRef } from 'react';
+import { useField } from '@unform/core';
 
-export const Input = ({name}) => {
+type Props = {
+  name: string,
+};
+
+export const Input = ({ name, ...rest }: Props) => {
   const inputRef = useRef(null);
-  const {fieldName, registerField, defaultValue, error} = useField(name);
+  const { fieldName, registerField, error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -15,9 +20,9 @@ export const Input = ({name}) => {
   }, [fieldName, registerField]);
 
   return (
-    <>
-      <input ref={inputRef} />
-    </>
+    <div>
+      <input ref={inputRef} {...rest} />
+      {error && <span style={{ color: '#f00' }}>{error}</span>}
+    </div>
   );
 };
-Input.prototype;
