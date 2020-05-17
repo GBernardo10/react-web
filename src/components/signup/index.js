@@ -4,6 +4,7 @@ import { Input } from '../form/input';
 import { FormStyle } from '../styles/signup';
 import { useRef } from 'react';
 import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import { User } from '../types/user';
 import { registerUserAction } from '../../redux/actions/authenticationActions';
@@ -16,6 +17,7 @@ type Props = {
 
 const SignUp = ({ dispatch }: Props) => {
   const formRef = useRef(null);
+  const router = useRouter();
 
   const handleSubmit = async (user: User, { reset }) => {
     try {
@@ -32,15 +34,17 @@ const SignUp = ({ dispatch }: Props) => {
         abortEarly: false,
       });
 
-      user.phone = '+5511983355797';
-
       const res = dispatch(registerUserAction(user));
-      if (!res) {
-        return;
-      }
+      setTimeout(() => {
+        if (res.status !== 201) {
+          alert('usuario nao cadastrado');
+          return;
+        }
+        formRef.current.setErrors({});
+        reset();
 
-      formRef.current.setErrors({});
-      reset();
+        router.push('/');
+      }, 1000);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};

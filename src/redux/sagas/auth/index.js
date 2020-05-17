@@ -14,7 +14,7 @@ export function* registerSaga(payload) {
 export function* authSaga(payload) {
   try {
     const response = yield call(authUser, payload);
-    yield [put({ type: types.LOGIN_USER_SUCCESS, response })];
+    yield put({ type: types.LOGIN_USER_SUCCESS, response });
   } catch (error) {
     yield put({ type: types.LOGIN_USER_ERROR, error });
   }

@@ -6,13 +6,17 @@ export const registerUserAction = (user: User) => {
   return {
     type: types.REGISTER_USER,
     user,
+    status: null,
+    err: null,
   };
 };
 
 export const loginUserAction = ({ username, password }: User) => {
+  const user = { username, password };
   return {
     type: types.LOGIN_USER,
-    username,
-    password,
+    user,
+    status: null,
+    err: null,
   };
 };

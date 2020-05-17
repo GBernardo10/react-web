@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
+import { createWrapper } from 'next-redux-wrapper';
 
 import createSagaMiddleware from 'redux-saga';
 import { reducer } from '../reducers';
@@ -10,7 +10,7 @@ export const configureStore = context => {
 
   const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-  store.sagaTask = sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };
