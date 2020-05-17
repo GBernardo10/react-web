@@ -3,10 +3,18 @@ import { Form } from '@unform/web';
 import { Input } from '../form/input';
 import { FormStyle } from '../styles/signup';
 import { useRef } from 'react';
+import { connect } from 'react-redux';
+
 import { User } from '../types/user';
+import { registerUserAction } from '../../redux/actions/authenticationActions';
+
 import * as Yup from 'yup';
 
-export default () => {
+type Props = {
+  dispatch: Function,
+};
+
+const SignUp = ({ dispatch }: Props) => {
   const formRef = useRef(null);
 
   const handleSubmit = async (user: User, { reset }) => {
@@ -14,6 +22,7 @@ export default () => {
       const schema = Yup.object().shape({
         username: Yup.string().required('Digite um nome de usuario'),
         password: Yup.string().required('Digite uma senha de usuario'),
+        phone: Yup.string().required('Digite um numero de celular'),
         mail: Yup.string()
           .email('Digite um email valido')
           .required('Digite um email'),
@@ -23,12 +32,19 @@ export default () => {
         abortEarly: false,
       });
 
+      user.phone = '+5511983355797';
+
+      const res = dispatch(registerUserAction(user));
+      if (!res) {
+        return;
+      }
+
       formRef.current.setErrors({});
       reset();
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           errorMessages[error.path] = error.message;
         });
         formRef.current.setErrors(errorMessages);
@@ -45,6 +61,9 @@ export default () => {
 
           <label htmlFor="mail">Email:</label>
           <Input id="mail" name="mail" />
+
+          <label htmlFor="phone">Celular:</label>
+          <Input id="phone" name="phone" />
 
           <label htmlFor="username">Apelido:</label>
           <Input id="username" name="username" />
@@ -63,3 +82,6 @@ export default () => {
     </div>
   );
 };
+
+const mapStateToProps = response => ({ response });
+export default connect(mapStateToProps)(SignUp);

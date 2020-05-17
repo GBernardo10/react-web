@@ -1,3 +1,5 @@
-import SignIn from '../../components/signin';
+import SignIn from '../../src/components/signin';
 
-export default () => <SignIn />;
+export default () => {
+  return <SignIn />;
+};

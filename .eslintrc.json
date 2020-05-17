@@ -24,7 +24,13 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "react-hooks", "flowtype", "prettier", "eslint-plugin-prettier"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "flowtype",
+    "prettier",
+    "eslint-plugin-prettier"
+  ],
   "rules": {
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
@@ -32,7 +38,19 @@
     "react-hooks/exhaustive-deps": "warn",
     "flowtype/use-flow-type": 1,
     "react/prop-types": ["warn"],
-    "react/display-name": 0
+    "react/display-name": 0,
+    "require-jsdoc": [
+      "off",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": true,
+          "FunctionExpression": true
+        }
+      }
+    ]
   },
   "settings": {
     "flowtype": {

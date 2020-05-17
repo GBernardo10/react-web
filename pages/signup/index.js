@@ -1,3 +1,3 @@
-import SignUp from '../../components/signup';
+import SignUp from '../../src/components/signup';
 
 export default () => <SignUp />;

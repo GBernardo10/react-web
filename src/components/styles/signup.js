@@ -9,7 +9,7 @@ export const FormStyle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fefe;
+    background: #3f3d56;
   }
   input {
     margin: 10px 0;
