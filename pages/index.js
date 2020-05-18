@@ -1,5 +1,5 @@
 // import dynamic from 'next/dynamic';
-// import App from '../src/app';
+import Eventos from '../src/components/eventos';
 
 // const Home = ({ children }) =>
 //   dynamic(() => import('../src/components/loading'), {
@@ -8,5 +8,5 @@
 //   });
 
 export default () => {
-  return <div>ola</div>;
+  return <Eventos></Eventos>;
 };

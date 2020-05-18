@@ -6,8 +6,8 @@ import { useRef } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { User } from '../types/user';
-import { registerUserAction } from '../../redux/actions/authenticationActions';
+import { User } from '../../redux/types/user';
+// import { registerUserAction } from '../../redux/actions/authenticationActions';
 
 import * as Yup from 'yup';
 
@@ -34,17 +34,17 @@ const SignUp = ({ dispatch }: Props) => {
         abortEarly: false,
       });
 
-      const res = dispatch(registerUserAction(user));
-      setTimeout(() => {
-        if (res.status !== 201) {
-          alert('usuario nao cadastrado');
-          return;
-        }
-        formRef.current.setErrors({});
-        reset();
+      // const res = dispatch(registerUserAction(user));
+      // setTimeout(() => {
+      //   if (res.status !== 201) {
+      //     alert('usuario nao cadastrado');
+      //     return;
+      //   }
+      //   formRef.current.setErrors({});
+      //   reset();
 
-        router.push('/');
-      }, 1000);
+      //   router.push('/');
+      // }, 1000);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};

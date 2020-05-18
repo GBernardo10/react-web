@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://localhost:3333/',
+export const api = axios.create({
+  baseURL: 'https://api.github.com',
 });
 
 export const registerUser = request => {
@@ -27,3 +27,5 @@ export const authUser = request => {
       request.status = err.response.status || 500;
     });
 };
+
+// export const loadEvento = () => api.get();

@@ -6,3 +6,9 @@ export type User = {
   username: string,
   password: string,
 };
+
+export type UserState = {
+  data: User[],
+  loading: boolean,
+  error: boolean,
+};
